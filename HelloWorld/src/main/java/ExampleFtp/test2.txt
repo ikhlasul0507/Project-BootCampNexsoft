@@ -1,0 +1,6 @@
+
+== Data Pelanggan ==
+ID		NAMA		UMUR		POINT		TOTAL TRANSAKSI
+1		Abas		23		5		125000
+2		Budi		32		1		20000
+3		Cici		19		2		35000

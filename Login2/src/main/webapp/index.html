@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Form Login</title>
+</head>
+<style type="text/css">
+
+	body {
+    margin: 0px;
+    padding: 0px;
+    background: url('back.jpg');}
+
+#wrapper {
+    	background-color: white;
+		border-radius: 5%;
+		border: 1px solid #cfdefa;
+		position: absolute;
+		height: 395px;
+		width: 600px;
+		margin-top: 60px;
+		margin-left : 28%;
+		padding: 2vh 3vh;
+		justify-content: center;
+}
+
+img{
+	height: 75px;
+
+}
+
+#header {
+    height: 185px;
+    width: 600px;
+    position: relative;
+}
+
+#tengah {
+    position: relative;
+    width: 600px;
+}
+
+#bawah {
+    background-color: #00FF00;
+    height: 40px;
+    width: 600px;
+    font-family: arial;
+	font-size: 10px;
+	text-align: center;
+}
+
+    hr{
+	 border: 1px solid #ff8533;
+     border-radius: 5px;
+    }
+
+    .chek{
+    	margin-top: 10px;
+    	margin-left: 23px;
+    	font-family: arial;
+    	text-align: center;
+    }
+
+	.judul{
+		font-family: arial;
+		font-size: 20px;
+		text-align: center;
+
+	}
+
+	.copy{
+		font-family: arial;
+		font-size: 12px;
+		text-align: center;
+
+	}
+
+	.ingat{
+		font-family: arial;
+		font-size: 13px;
+
+	}
+
+	.input{
+		width: 90%;
+    	height: 35px;
+        margin: 8px 0 0 20px;
+        display: inline-block;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        box-sizing: border-box;
+
+	}
+
+.button {
+        background-color: #FF4500;
+        border: none;
+        color: white;
+        padding: 10px 32px;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        font-size: 12px;
+        margin: 10px 2px;
+        margin-left: 23px;
+        cursor: pointer;
+        font-weight: bold;
+        width: 537px;
+    }
+
+</style>
+
+<body>
+<div id="wrapper">
+    <div id="header">
+        <center>
+            <img src="img.png" alt="Logo Login"></center>
+        <p class="judul">FORM LOGIN<br>
+            PT PARAMADAKSA TEKNOLOGI NUSANTARA<br></p>
+        <hr>
+    </div><!--end of header-->
+    <div id="tengah">
+        <form method="post" action="login">
+            <input type="text" class="input" placeholder="Masukan Username" name="username">
+            <input type="password" class="input" placeholder="Masukan Password" name="password">
+            <br>
+            <br>
+            <input type="submit" class="button" value="Login" />
+        </form>
+        <div class="bawah">
+            <center><span class="copy">&copy; Kristianto - 2020 </span></center>
+        </div>
+    </div>
+    <!--end of tengah-->
+</div>
+<!--end of wrapper-->
+</body>
+</html>

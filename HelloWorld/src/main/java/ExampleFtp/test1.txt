@@ -1,0 +1,5 @@
+1|Lutfi|23|30|Nasi Goreng|15000.0
+1|Lutfi|23|30|Nasi Goreng|10000.0
+2|Nobita|11|20|Mie Goreng|10000.0
+2|Nobita|11|20|Soto Iga|50000.0
+1|Lutfi|23|30|Soto Ayam|20000.0
