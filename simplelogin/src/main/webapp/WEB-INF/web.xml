@@ -1,0 +1,45 @@
+<!DOCTYPE web-app PUBLIC
+ "-//Sun Microsystems, Inc.//DTD Web Application 2.3//EN"
+ "http://java.sun.com/dtd/web-app_2_3.dtd" >
+
+<web-app>
+<!--  <servlet>-->
+<!--    <servlet-name>welcome</servlet-name>-->
+<!--    <servlet-class>WelcomeServlet</servlet-class>-->
+<!--  </servlet>-->
+<!--  <servlet-mapping>-->
+<!--    <servlet-name>welcome</servlet-name>-->
+<!--    <url-pattern>/servlet2</url-pattern>-->
+<!--  </servlet-mapping>-->
+  <display-name>Archetype Created Web Application</display-name>
+
+  <context-param>
+    <param-name>jdbcURL</param-name>
+    <param-value>jdbc:mysql://localhost:3306/db_ujian2</param-value>
+  </context-param>
+
+  <context-param>
+    <param-name>jdbcUsername</param-name>
+    <param-value>root</param-value>
+  </context-param>
+
+  <context-param>
+    <param-name>jdbcPassword</param-name>
+    <param-value>ABcd//12</param-value>
+  </context-param>
+
+  <servlet>
+    <servlet-name>ControllerServlet</servlet-name>
+    <servlet-class>simplelogin.ControllerServlet</servlet-class>
+  </servlet>
+
+  <servlet-mapping>
+    <servlet-name>ControllerServlet</servlet-name>
+    <url-pattern>/</url-pattern>
+  </servlet-mapping>
+
+  <error-page>
+    <exception-type>java.lang.Exception</exception-type>
+    <location>/Error.jsp</location>
+  </error-page>
+</web-app>
