@@ -8,6 +8,7 @@ public class Product {
    private String name;
    private int categoryId;
    private double price;
+   private int qty;
 
     public Product(int id, String name, int categoryId, double price) {
         this.id = id;
@@ -16,6 +17,13 @@ public class Product {
         this.price = price;
     }
 
+    public int getQty() {
+        return qty;
+    }
+
+    public void setQty(int qty) {
+        this.qty = qty;
+    }
 
     public static AtomicLong getCounter() {
         return counter;

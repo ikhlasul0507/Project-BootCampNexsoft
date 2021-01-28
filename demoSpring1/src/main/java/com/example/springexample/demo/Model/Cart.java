@@ -1,16 +1,28 @@
 package com.example.springexample.demo.Model;
 
+import java.util.List;
+
 public class Cart {
     private int idCart;
     private String tglTransaksi;
     private int idCustomer;
     private String statusBayar;
+    List<Product> productList;
 
-    public Cart(int idCart, String tglTransaksi, int idCustomer, String statusBayar) {
+    public Cart(int idCart, String tglTransaksi, int idCustomer, String statusBayar, List<Product> productList) {
         this.idCart = idCart;
         this.tglTransaksi = tglTransaksi;
         this.idCustomer = idCustomer;
         this.statusBayar = statusBayar;
+        this.productList = productList;
+    }
+
+    public List<Product> getProductList() {
+        return productList;
+    }
+
+    public void setProductList(List<Product> productList) {
+        this.productList = productList;
     }
 
     public int getIdCart() {

@@ -1,6 +1,7 @@
 package com.example.springexample.demo.repository;
 
 import com.example.springexample.demo.Model.Cart;
+import com.example.springexample.demo.Model.Product;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
@@ -20,7 +21,7 @@ public class CartRepositoryImpl implements CartRepository {
                                 rs.getInt("idCart"),
                                 rs.getString("tglTransaksi"),
                                 rs.getInt("idCustomer"),
-                                rs.getString("statusBayar")
+                                rs.getString("statusBayar"),null
                         ));
     }
 
@@ -31,13 +32,21 @@ public class CartRepositoryImpl implements CartRepository {
                                 rs.getInt("idCart"),
                                 rs.getString("tglTransaksi"),
                                 rs.getInt("idCustomer"),
-                                rs.getString("statusBayar")
+                                rs.getString("statusBayar"),null
                         ));
     }
 
     public void saveCart(Cart cart){
         jdbcTemplate.update("INSERT INTO Cart(tglTransaksi, idCustomer, statusBayar) VALUES (?,?,?)",
                 new Date(), cart.getIdCustomer(), "No");
+        List<Product> products = cart.getProductList();
+
+        for (int i=0; i<products.size(); i++){
+            Product product = products.get(i);
+            jdbcTemplate.update("INSERT INTO cartdetail(idCart, idProduct, qty) VALUES (?,?,?)",
+                    cart.getIdCart(), products.get(i).getId(),product.getQty());
+        }
+
     }
 
     public void updateCart(Cart cart){
@@ -56,7 +65,7 @@ public class CartRepositoryImpl implements CartRepository {
                                 rs.getInt("idCart"),
                                 rs.getString("tglTransaksi"),
                                 rs.getInt("idCustomer"),
-                                rs.getString("statusBayar")
+                                rs.getString("statusBayar"),null
                         ));
     }
 
@@ -67,7 +76,7 @@ public class CartRepositoryImpl implements CartRepository {
                                 rs.getInt("idCart"),
                                 rs.getString("tglTransaksi"),
                                 rs.getInt("idCustomer"),
-                                rs.getString("statusBayar")
+                                rs.getString("statusBayar"),null
                         ));
     }
 
