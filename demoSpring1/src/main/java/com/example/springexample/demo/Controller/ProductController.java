@@ -92,7 +92,7 @@ public class ProductController {
         Category category1 = categoryService.findById(product.getCategoryId());
         if (category1 == null){
             logger.error("Unable to create. A Category Does Not exist");
-            return new ResponseEntity<>(new CustomErrorType("Unable to create. A Product with name " +product.getName() + " already exist."), HttpStatus.CONFLICT);
+            return new ResponseEntity<>(new CustomErrorType("Id Category Not Found !"), HttpStatus.CONFLICT);
 
         }
 

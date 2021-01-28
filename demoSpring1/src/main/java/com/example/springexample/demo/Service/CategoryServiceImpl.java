@@ -4,6 +4,7 @@ import com.example.springexample.demo.Model.Product;
 import com.example.springexample.demo.repository.CategoryRepository;
 import com.example.springexample.demo.repository.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -33,7 +34,13 @@ public class CategoryServiceImpl implements CategoryService {
 
     public Category findById(int id) {
 //        return categories.get(id);
-        Category obj = categoryRepository.findById(id);
+        Category obj;
+        try {
+            obj = categoryRepository.findById(id);
+        }catch (EmptyResultDataAccessException e){
+            System.out.println(e);
+            obj = null;
+        }
         return obj;
     }
 
