@@ -1,8 +1,12 @@
 package com.example.springexample.demo.Controller;
 
+import com.example.springexample.demo.Model.Category;
 import com.example.springexample.demo.Model.Product;
+import com.example.springexample.demo.Service.CategoryService;
 import com.example.springexample.demo.Service.ProductService;
 import com.example.springexample.demo.Util.CustomErrorType;
+import com.example.springexample.demo.repository.CategoryRepository;
+import com.example.springexample.demo.repository.ProductRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +25,9 @@ public class ProductController {
     @Autowired
     ProductService productService; //Service which will do all data retrieval/manipulation work
 
+    @Autowired
+    CategoryService categoryService;
+
     // -------------------Retrieve All Products--------------------------------------------
 
     @RequestMapping(value = "/product/", method = RequestMethod.GET)
@@ -35,7 +42,7 @@ public class ProductController {
     // -------------------Retrieve Single Product------------------------------------------
 
     @RequestMapping(value = "/product/{id}", method = RequestMethod.GET)
-    public ResponseEntity<?> getProduct(@PathVariable("id") long id) {
+    public ResponseEntity<?> getProduct(@PathVariable("id") int id) {
         logger.info("Fetching Product with id {}", id);
         Product product = productService.findById(id);
         if (product == null) {
@@ -45,25 +52,59 @@ public class ProductController {
         return new ResponseEntity<>(product, HttpStatus.OK);
     }
 
+    // -------------------Retrieve Single name Product------------------------------------------
+
+    @RequestMapping(value = "/product/name/{name}", method = RequestMethod.GET)
+    public ResponseEntity<?> getProduct(@PathVariable("name") String name) {
+        logger.info("Fetching Product with name {}", name);
+        Product product = (Product) productService.findByName(name).get(0);
+        if (product == null) {
+            logger.error("Product with name {} not found.", name);
+            return new ResponseEntity<>(new CustomErrorType("Product with name " + name  + " not found"), HttpStatus.NOT_FOUND);
+        }
+        return new ResponseEntity<>(product, HttpStatus.OK);
+    }
+
+
+    @RequestMapping(value = "/product/detail/", method = RequestMethod.GET)
+    public ResponseEntity<?> getProduct(@RequestParam("id") int id, @RequestParam ("name") String name){
+        logger.info("Fetching Product with id {} and name {}", id, name);
+        List <Product> products = productService.findByIdAndName(id, name);
+        if (products.size() == 0) {
+            logger.error("Product with id {} and name {} not found.", id, name);
+            return new ResponseEntity<>(new CustomErrorType("Product with id "+id+" and name " + name  + " not found"), HttpStatus.NOT_FOUND);
+        }
+        return new ResponseEntity<>(products, HttpStatus.OK);
+    }
+
+
+
     // -------------------Create a Product-------------------------------------------
 
     @RequestMapping(value = "/product/", method = RequestMethod.POST)
     public ResponseEntity<?> createProduct(@RequestBody Product product) {
         logger.info("Creating Product : {}", product);
-
-        if (productService.isProductExist(product)) {
+        if (productService.isProductExist(product)){
             logger.error("Unable to create. A Product with name {} already exist", product.getName());
             return new ResponseEntity<>(new CustomErrorType("Unable to create. A Product with name " +product.getName() + " already exist."), HttpStatus.CONFLICT);
-        }
-        productService.saveProduct(product);
 
-        return new ResponseEntity<>(product, HttpStatus.CREATED);
+        }
+        Category category1 = categoryService.findById(product.getCategoryId());
+        if (category1 == null){
+            logger.error("Unable to create. A Category Does Not exist");
+            return new ResponseEntity<>(new CustomErrorType("Unable to create. A Product with name " +product.getName() + " already exist."), HttpStatus.CONFLICT);
+
+        }
+
+        productService.saveProduct(product);
+        List<Product> products = productService.findAllProductsSave();
+        return new ResponseEntity<>(products, HttpStatus.OK);
     }
 
     // ------------------- Update a Product ------------------------------------------------
 
     @RequestMapping(value = "/product/{id}", method = RequestMethod.PUT)
-    public ResponseEntity<?> updateProduct(@PathVariable("id") long id, @RequestBody Product product) {
+    public ResponseEntity<?> updateProduct(@PathVariable("id") int id, @RequestBody Product product) {
         logger.info("Updating Product with id {}", id);
 
         Product currentProduct = productService.findById(id);
@@ -85,7 +126,7 @@ public class ProductController {
     // ------------------- Delete a Product-----------------------------------------
 
     @RequestMapping(value = "/product/{id}", method = RequestMethod.DELETE)
-    public ResponseEntity<?> deleteProduct(@PathVariable("id") long id) {
+    public ResponseEntity<?> deleteProduct(@PathVariable("id") int id) {
         logger.info("Fetching & Deleting Product with id {}", id);
 
         Product product = productService.findById(id);
@@ -95,6 +136,24 @@ public class ProductController {
                     HttpStatus.NOT_FOUND);
         }
         productService.deleteProductById(id);
+        logger.info("Berhasil Di Hapus !");
+        return new ResponseEntity<Product>(HttpStatus.NO_CONTENT);
+    }
+
+    // ------------------- Delete a Product by name-----------------------------------------
+
+    @RequestMapping(value = "/product/name/", method = RequestMethod.DELETE)
+//    public ResponseEntity<?> deleteProduct(@PathVariable("name") String name) {
+        public ResponseEntity<?> deleteProduct(@RequestParam("name") String name){
+        logger.info("Fetching & Deleting Product with name {}", name);
+
+        Product product = (Product) productService.findByName(name).get(0);
+        if (product == null) {
+            logger.error("Unable to delete. Product with name {} not found.", name);
+            return new ResponseEntity<>(new CustomErrorType("Unable to delete. Product with name " + name + " not found."),
+                    HttpStatus.NOT_FOUND);
+        }
+        productService.deleteProductByName(name);
         logger.info("Berhasil Di Hapus !");
         return new ResponseEntity<Product>(HttpStatus.NO_CONTENT);
     }

@@ -31,7 +31,7 @@ public class CategoryController {
     }
     //retrive single category
     @RequestMapping(value = "/category/{id}", method = RequestMethod.GET)
-    public ResponseEntity<?> getCategory(@PathVariable("id") long id){
+    public ResponseEntity<?> getCategory(@PathVariable("id") int id){
         logger.info("Fetching Category with id {}", id);
         Category category = categoryService.findById(id);
         if (category==null){
@@ -48,11 +48,13 @@ public class CategoryController {
             logger.error("Unable to create, a product with name {} already exist", category);
         }
         categoryService.saveCategory(category);
-        return new ResponseEntity<>(category,HttpStatus.CREATED);
+
+        List<Category> categories = categoryService.findAllCategorySave();
+        return new ResponseEntity<>(categories,HttpStatus.OK);
     }
     //update category
     @RequestMapping(value = "/category/{id}", method = RequestMethod.PUT)
-    public ResponseEntity<?> updateCategory(@PathVariable("id")long id, @RequestBody Category category){
+    public ResponseEntity<?> updateCategory(@PathVariable("id")int id, @RequestBody Category category){
         logger.info("Updating product with id {}", id);
 
         Category currentCategory = categoryService.findById(id);
@@ -67,7 +69,7 @@ public class CategoryController {
     }
     //delete category
     @RequestMapping(value = "/category/{id}", method = RequestMethod.DELETE)
-    public ResponseEntity<?> deleteProduct(@PathVariable("id") long id){
+    public ResponseEntity<?> deleteProduct(@PathVariable("id") int id){
         logger.info("Fetching & deleting product with id {}", id);
 
         Category category = categoryService.findById(id);

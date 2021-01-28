@@ -1,9 +1,11 @@
 package com.example.springexample.demo.Service;
 
 import com.example.springexample.demo.Model.Product;
+import com.example.springexample.demo.repository.ProductRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -12,41 +14,73 @@ public class ProductServiceImpl implements ProductService {
     private static HashMap<Long, Product> products = new HashMap<>();
     private static HashMap<String, Long> idNameHashMap = new HashMap<>();
 
+    @Autowired
+    ProductRepository productRepository;
+
+
     public List<Product> findAllProducts(){
         //pagination should be added
-        return new ArrayList<>(products.values());
+        List<Product> products = productRepository.findAll();
+        return products;
     }
-    public Product findById(long id){
-        return products.get(id);
+    public List<Product> findAllProductsSave(){
+        //pagination should be added
+        List<Product> products = productRepository.findAllSave();
+        return products;
     }
-    public Product findByName(String name){
-        if (idNameHashMap.get(name)!=null){
-            return products.get(idNameHashMap.get(name));
+
+    public Product findById(int id){
+        Product obj;
+        try {
+            obj = productRepository.findById(id);
+        }catch (EmptyResultDataAccessException e){
+            System.out.println(e);
+            obj=null;
         }
-        return null;
+        return obj;
+    }
+    public List<Product> findByName(String name){
+        return productRepository.findByName(name);
+    }
+
+    @Override
+    public List<Product> findByIdAndName(int id, String name) {
+        return productRepository.findByIdAndName(id, name);
     }
     public void saveProduct(Product product){
         synchronized (this){
-            products.put(product.getId(),product);
-            idNameHashMap.put(product.getName(),product.getId());
+            //products.put(product.getId(),product);
+            //idNameHashMap.put(product.getName(),product.getId());
+            productRepository.addProduct(product);
         }
     }
     public void updateProduct(Product product){
         synchronized (this){
-            products.put(product.getId(),product);
-            idNameHashMap.put(product.getName(),product.getId());
+//            products.put(product.getId(),product);
+//            idNameHashMap.put(product.getName(),product.getId());
+            productRepository.updateProduct(product);
         }
     }
-    public void deleteProductById(long id){
+    public void deleteProductById(int id){
         synchronized (this){
-            idNameHashMap.remove(products.get(id).getName());
-            products.remove(id);
+//            idNameHashMap.remove(products.get(id).getName());
+//            products.remove(id);
+            productRepository.deleteProductById(id);
         }
     }
+    public void deleteProductByName(String name){
+        synchronized (this){
+//            idNameHashMap.remove(products.get(id).getName());
+//            products.remove(id);
+            productRepository.deleteProductByName(name);
+        }
+    }
+
     public boolean isProductExist(Product product){
-        return findByName(product.getName())!= null;
+        return productRepository.findByName(product.getName()).size() != 0;
     }
     public void deleteAllProducts(){
-        products.clear();
+//        products.clear();
+        productRepository.deleteAllProduct();
     }
 }

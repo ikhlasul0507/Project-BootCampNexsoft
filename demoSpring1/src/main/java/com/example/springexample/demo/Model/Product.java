@@ -4,21 +4,18 @@ import java.util.concurrent.atomic.AtomicLong;
 
 public class Product {
    private static final AtomicLong counter=  new AtomicLong();
-   private long id;
+   private int id;
    private String name;
    private int categoryId;
    private double price;
 
-    public Product() {
-        this.id = counter.incrementAndGet();
-    }
-
-    public Product(long id, String name, int categoryId, double price) {
+    public Product(int id, String name, int categoryId, double price) {
         this.id = id;
         this.name = name;
         this.categoryId = categoryId;
         this.price = price;
     }
+
 
     public static AtomicLong getCounter() {
         return counter;
@@ -28,7 +25,7 @@ public class Product {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(int id) {
         this.id = id;
     }
 
