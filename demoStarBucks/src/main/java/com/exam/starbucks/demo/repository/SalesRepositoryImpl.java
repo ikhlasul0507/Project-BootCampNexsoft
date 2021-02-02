@@ -95,7 +95,6 @@ public class SalesRepositoryImpl implements SalesRepository {
             Product product = products.get(i);
             UUID uuid1 = UUID.randomUUID();
             String randomUUIDString1 = uuid1.toString();
-
             jdbcTemplate.update("INSERT INTO salesdetail(kodeDetail, kodeTransaksi,kodeProduct, qty) VALUES (?,?,?,?)",
                     randomUUIDString1, sales.getKodeTransaksi(), products.get(i).getIdProduct(),product.getQty());
         }
@@ -124,7 +123,9 @@ public class SalesRepositoryImpl implements SalesRepository {
                         new Product(
                                 rs.getString("idProduct"),
                                 rs.getString("namaProduct"),
-                                rs.getInt("harga")
+                                rs.getInt("harga"),
+                                rs.getInt("qty")
+
                         )));
         return sales;
     }

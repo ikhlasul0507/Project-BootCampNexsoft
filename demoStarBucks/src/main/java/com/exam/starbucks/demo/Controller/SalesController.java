@@ -68,11 +68,11 @@ public class SalesController {
             return new ResponseEntity<>(new CustomErrorType("Unable to update. Cart with id " + sales.getKodeTransaksi() + " not found."),
                     HttpStatus.NOT_FOUND);
         } else {
-//            currentCart.setTglTransaksi(cart.getTglTransaksi());
+////            currentCart.setTglTransaksi(cart.getTglTransaksi());
 //            currentCart.setIdCustomer(cart.getIdCustomer());
 //            currentCart.setStatusBayar(cart.getStatusBayar());
             salesService.updateSales(sales);
-            return new ResponseEntity<>(sales, HttpStatus.CREATED);
+            return new ResponseEntity<>("Data Berhasil Di Update !", HttpStatus.OK);
         }
 
     }

@@ -31,7 +31,6 @@ public class ProductRepositoryImpl implements ProductRepository {
                                 rs.getString("idProduct"),
                                 rs.getString("namaProduct"),
                                 rs.getInt("harga")
-
                         )
         );
     }
@@ -46,7 +45,7 @@ public class ProductRepositoryImpl implements ProductRepository {
     }
     // update new customer
     public void updateProduct(Product product) {
-        jdbcTemplate.update("UPDATE product SET nameProduct= ?, harga=?",
+        jdbcTemplate.update("UPDATE product SET namaProduct= ?, harga=?",
                 product.getNamaProduct(), product.getHarga());
     }
 

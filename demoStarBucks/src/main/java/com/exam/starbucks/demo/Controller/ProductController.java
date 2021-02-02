@@ -75,5 +75,24 @@ public class ProductController {
         productService.deleteAllProducts();
         return new ResponseEntity<Product>(HttpStatus.OK);
     }
+    //update product
+    @RequestMapping(value = "/productUpdate/{idProduct}", method = RequestMethod.PUT)
+    public ResponseEntity<?> updateProduct(@PathVariable("idProduct") String idProduct, @RequestBody Product product) {
+        logger.info("Updating Product with id {}", idProduct);
+
+        Product currentProduct = productService.findById(idProduct);
+
+        if (currentProduct == null) {
+            logger.error("Unable to update. Product with id {} not found.", idProduct);
+            return new ResponseEntity<>(new CustomErrorType("Unable to upate. Product with id " + idProduct + " not found."),
+                    HttpStatus.NOT_FOUND);
+        }
+
+        currentProduct.setNamaProduct(product.getNamaProduct());
+        currentProduct.setHarga(product.getHarga());
+
+        productService.updateProduct(currentProduct);
+        return new ResponseEntity<>(currentProduct, HttpStatus.OK);
+    }
 
 }
