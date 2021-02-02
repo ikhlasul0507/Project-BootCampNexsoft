@@ -18,7 +18,7 @@ public class SalesRepositoryImpl implements SalesRepository {
 
     public List<Sales> findAll(){
         List<Sales> salesHeaders;
-        List<SalesDetail> salesDetails;
+        List<SalesDetail> salesDetails = null;
         salesHeaders = jdbcTemplate.query("SELECT * FROM sales",
                 (rs, rowNum)->
                         new Sales(

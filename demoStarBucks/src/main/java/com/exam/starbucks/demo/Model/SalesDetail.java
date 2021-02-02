@@ -6,7 +6,6 @@ public class SalesDetail {
     private String kodeDetail, kodeTransaksi, kodeProduct;
     private int qty;
     List<Product> salesDetail;
-
     public SalesDetail(String kodeDetail, String kodeTransaksi, String kodeProduct, int qty) {
         this.kodeDetail = kodeDetail;
         this.kodeTransaksi = kodeTransaksi;
