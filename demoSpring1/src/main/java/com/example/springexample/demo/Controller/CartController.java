@@ -28,14 +28,20 @@ public class CartController {
         List<Cart> carts = (List<Cart>) cartService.findAll();
         if (carts.isEmpty()) {
             return new ResponseEntity<>(carts, HttpStatus.NOT_FOUND);
+        } else {
+            return new ResponseEntity<>(carts, HttpStatus.OK);
         }
-        return new ResponseEntity<>(carts, HttpStatus.OK);
     }
 
+    @RequestMapping(value = "/cart/pagging/", method = RequestMethod.GET)
+        public ResponseEntity<?> getCartPaging(@RequestParam("page") int page, @RequestParam("limit") int limit){
+            List<Cart> cart = cartService.findWithPaging(page,limit);
+            return new ResponseEntity<>(cart, HttpStatus.OK);
+        }
     // -------------------Retrieve Single category------------------------------------------
 
     @RequestMapping(value = "/cart/{id}", method = RequestMethod.GET)
-    public ResponseEntity<?> getCart(@PathVariable("id") long id) {
+    public ResponseEntity<?> getCart(@PathVariable("id") String id) {
         logger.info("Fetching cart with id {}", id);
         Cart cart = cartService.findById(id);
         if (cart == null) {
@@ -58,29 +64,50 @@ public class CartController {
 
     // ------------------- Update a Product ------------------------------------------------
 
-    @RequestMapping(value = "/cart/{id}", method = RequestMethod.PUT)
-    public ResponseEntity<?> updateCart(@PathVariable("id") long id, @RequestBody Cart cart) {
-        logger.info("Updating Cart with id {}", id);
+    @RequestMapping(value = "/cart/", method = RequestMethod.PUT)
+    public ResponseEntity<?> updateCart(@RequestBody Cart cart) {
+        logger.info("Updating Cart with id {}", cart.getIdCart());
 
-        Cart currentCart = cartService.findById(id);
+        Cart currentCart = cartService.findById(cart.getIdCart());
 
         if (currentCart == null) {
-            logger.error("Unable to update. Cart with id {} not found.", id);
-            return new ResponseEntity<>(new CustomErrorType("Unable to update. Cart with id " + id + " not found."),
+            logger.error("Unable to update. Cart with id {} not found.", cart.getIdCart());
+            return new ResponseEntity<>(new CustomErrorType("Unable to update. Cart with id " + cart.getIdCart() + " not found."),
                     HttpStatus.NOT_FOUND);
+        } else {
+//            currentCart.setTglTransaksi(cart.getTglTransaksi());
+//            currentCart.setIdCustomer(cart.getIdCustomer());
+//            currentCart.setStatusBayar(cart.getStatusBayar());
+            cartService.updateCart(cart);
+            return new ResponseEntity<>(cart, HttpStatus.CREATED);
         }
 
-        currentCart.setTglTransaksi(cart.getTglTransaksi());
-        currentCart.setIdCustomer(cart.getIdCustomer());
-        currentCart.setStatusBayar(cart.getStatusBayar());
-        cartService.updateCart(currentCart);
-        return new ResponseEntity<>(cart, HttpStatus.CREATED);
     }
+    //updata status
+    @RequestMapping(value = "/cart/status", method = RequestMethod.PUT)
+    public ResponseEntity<?> updateCartStatus(@RequestBody Cart cart) {
+        logger.info("Updating Cart with id {}", cart.getIdCart());
+
+        Cart currentCart = cartService.findById(cart.getIdCart());
+
+        if (currentCart == null) {
+            logger.error("Unable to update. Cart with id {} not found.", cart.getIdCart());
+            return new ResponseEntity<>(new CustomErrorType("Unable to update. Cart with id " + cart.getIdCart() + " not found."),
+                    HttpStatus.NOT_FOUND);
+        } else {
+
+            currentCart.setStatusBayar(cart.getStatusBayar());
+            cartService.updateCartStatus(cart);
+            return new ResponseEntity<>(cart, HttpStatus.CREATED);
+        }
+
+    }
+
 
     // ------------------- Delete a Product-----------------------------------------
 
     @RequestMapping(value = "/cart/{id}", method = RequestMethod.DELETE)
-    public ResponseEntity<?> deleteCart(@PathVariable("id") long id) {
+    public ResponseEntity<?> deleteCart(@PathVariable("id") String id) {
         logger.info("Fetching & Deleting Category with id {}", id);
 
         Cart cart = cartService.findById(id);

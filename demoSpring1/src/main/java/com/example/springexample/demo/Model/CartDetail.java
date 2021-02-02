@@ -3,14 +3,22 @@ package com.example.springexample.demo.Model;
 import java.util.List;
 
 public class CartDetail {
-    private int idCartDetail,idCart,idProduct,qty;
-
-
-    public CartDetail(int idCartDetail, int idCart, int idProduct, int qty) {
+    private int idCartDetail,qty;
+    private String idCart,idProduct;
+    List<Product> cardDetail;
+    public CartDetail(int idCartDetail, String idCart, String idProduct, int qty) {
         this.idCartDetail = idCartDetail;
         this.idCart = idCart;
         this.idProduct = idProduct;
         this.qty = qty;
+    }
+
+    public List<Product> getCardDetail() {
+        return cardDetail;
+    }
+
+    public void setCardDetail(List<Product> cardDetail) {
+        this.cardDetail = cardDetail;
     }
 
     public int getIdCartDetail() {
@@ -21,19 +29,19 @@ public class CartDetail {
         this.idCartDetail = idCartDetail;
     }
 
-    public int getIdCart() {
+    public String getIdCart() {
         return idCart;
     }
 
-    public void setIdCart(int idCart) {
+    public void setIdCart(String idCart) {
         this.idCart = idCart;
     }
 
-    public int getIdProduct() {
+    public String getIdProduct() {
         return idProduct;
     }
 
-    public void setIdProduct(int idProduct) {
+    public void setIdProduct(String idProduct) {
         this.idProduct = idProduct;
     }
 

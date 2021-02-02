@@ -120,7 +120,7 @@ public class CartDetailController {
                     HttpStatus.NOT_FOUND);
         }
         cartDetailService.deleteCartDetailById(id);
-        return new ResponseEntity<CartDetail>(HttpStatus.NO_CONTENT);
+        return new ResponseEntity<>("Berhasil Di Hapus !",HttpStatus.OK);
     }
 
 }

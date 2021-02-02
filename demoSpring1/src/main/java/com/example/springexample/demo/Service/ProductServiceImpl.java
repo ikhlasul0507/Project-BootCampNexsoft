@@ -29,7 +29,7 @@ public class ProductServiceImpl implements ProductService {
         return products;
     }
 
-    public Product findById(int id){
+    public Product findById(String id){
         Product obj;
         try {
             obj = productRepository.findById(id);
@@ -61,7 +61,7 @@ public class ProductServiceImpl implements ProductService {
             productRepository.updateProduct(product);
         }
     }
-    public void deleteProductById(int id){
+    public void deleteProductById(String id){
         synchronized (this){
 //            idNameHashMap.remove(products.get(id).getName());
 //            products.remove(id);

@@ -5,7 +5,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
+import java.util.Date;
 import java.util.List;
+import java.util.UUID;
 
 @Repository("ProductRepository")
 public class ProductRepositoryImpl implements ProductRepository {
@@ -16,7 +18,7 @@ public class ProductRepositoryImpl implements ProductRepository {
         return jdbcTemplate.query("select * from product",
                 (rs, rowNum)->
                         new Product(
-                                rs.getInt("id"),
+                                rs.getString("id"),
                                 rs.getString("name"),
                                 rs.getInt("categoryId"),
                                 rs.getDouble("harga")
@@ -27,7 +29,7 @@ public class ProductRepositoryImpl implements ProductRepository {
         return jdbcTemplate.query("select * from product ORDER BY id DESC Limit 1",
                 (rs, rowNum)->
                         new Product(
-                                rs.getInt("id"),
+                                rs.getString("id"),
                                 rs.getString("name"),
                                 rs.getInt("categoryId"),
                                 rs.getDouble("harga")
@@ -36,8 +38,12 @@ public class ProductRepositoryImpl implements ProductRepository {
     }
     // Add new customer
     public void addProduct(Product product) {
-        jdbcTemplate.update("INSERT INTO product(name, categoryId, harga) VALUES (?,?,?)",
-                product.getName(), product.getCategoryId(), product.getPrice());
+        UUID uuid = UUID.randomUUID();
+        String randomUUIDString = uuid.toString();
+        Date date= new Date();
+        long time = date.getTime();
+        jdbcTemplate.update("INSERT INTO product(id,name, categoryId, harga,time) VALUES (?,?,?,?,?)",
+                randomUUIDString,product.getName(), product.getCategoryId(), product.getPrice(),time);
     }
     // update new customer
     public void updateProduct(Product product) {
@@ -45,12 +51,12 @@ public class ProductRepositoryImpl implements ProductRepository {
                 product.getName(), product.getCategoryId(), product.getPrice());
     }
 
-    public Product findById(int id){
-        String sql = "select * from product WHERE id="+id+"";
+    public Product findById(String id){
+        String sql = "select * from product WHERE id='"+id+"'";
         return jdbcTemplate.queryForObject(sql,
                 (rs, rowNum)->
                         new Product(
-                                rs.getInt("id"),
+                                rs.getString("id"),
                                 rs.getString("name"),
                                 rs.getInt("categoryId"),
                                 rs.getDouble("harga")
@@ -62,7 +68,7 @@ public class ProductRepositoryImpl implements ProductRepository {
                new Object[]{"%"+name+"%"},
                 (rs, rowNum)->
                         new Product(
-                                rs.getInt("id"),
+                                rs.getString("id"),
                                 rs.getString("name"),
                                 rs.getInt("categoryId"),
                                 rs.getDouble("harga")
@@ -76,7 +82,7 @@ public class ProductRepositoryImpl implements ProductRepository {
                 new Object[]{id,"%"+name+"%"},
                 (rs, rowNum)->
                         new Product(
-                                rs.getInt("id"),
+                                rs.getString("id"),
                                 rs.getString("name"),
                                 rs.getInt("categoryId"),
                                 rs.getDouble("harga")
@@ -84,7 +90,7 @@ public class ProductRepositoryImpl implements ProductRepository {
         );
     }
 
-    public void deleteProductById(int id){
+    public void deleteProductById(String id){
         jdbcTemplate.execute(" DELETE FROM product WHERE id="+id+"");
     }
     public void deleteProductByName(String name) {

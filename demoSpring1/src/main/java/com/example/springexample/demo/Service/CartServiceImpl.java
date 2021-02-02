@@ -6,7 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -24,12 +23,17 @@ public class CartServiceImpl implements CartService {
         return carts;
     }
 
+    public List<Cart> findWithPaging(int page, int limit){
+        List<Cart> carts = cartRepository.findWithPaging(page,limit);
+        return carts;
+    }
+
     public List<Cart> find() {
         List<Cart> carts = cartRepository.find();
         return carts;
     }
 
-    public Cart findById(long id) {
+    public Cart findById(String id) {
         Cart pd;
         try{
             pd = cartRepository.findById(id);
@@ -62,8 +66,13 @@ public class CartServiceImpl implements CartService {
             cartRepository.updateCart(cart);
         }
     }
+    public void updateCartStatus(Cart cart) {
+        synchronized (this) {
+            cartRepository.updateCartStatus(cart);
+        }
+    }
 
-    public void deleteCartById(long id) {
+    public void deleteCartById(String id) {
         synchronized (this) {
             cartRepository.deleteCartById(id);
         }

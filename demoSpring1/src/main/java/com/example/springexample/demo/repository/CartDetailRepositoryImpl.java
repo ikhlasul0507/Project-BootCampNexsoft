@@ -19,8 +19,8 @@ public class CartDetailRepositoryImpl implements CartDetailRepository{
                 (rs,rowNum)->
                         new CartDetail(
                                 rs.getInt("idCartDetail"),
-                                rs.getInt("idCart"),
-                                rs.getInt("idProduct"),
+                                rs.getString("idCart"),
+                                rs.getString("idProduct"),
                                 rs.getInt("qty")
                         ));
     }
@@ -29,8 +29,8 @@ public class CartDetailRepositoryImpl implements CartDetailRepository{
                 (rs,rowNum)->
                         new CartDetail(
                                 rs.getInt("idCartDetail"),
-                                rs.getInt("idCart"),
-                                rs.getInt("idProduct"),
+                                rs.getString("idCart"),
+                                rs.getString("idProduct"),
                                 rs.getInt("qty")
                         ));
     }
@@ -56,8 +56,8 @@ public class CartDetailRepositoryImpl implements CartDetailRepository{
                 (rs,rowNum)->
                         new CartDetail(
                                 rs.getInt("idCartDetail"),
-                                rs.getInt("idCart"),
-                                rs.getInt("idProduct"),
+                                rs.getString("idCart"),
+                                rs.getString("idProduct"),
                                 rs.getInt("qty")
                         ));
     }
@@ -67,8 +67,8 @@ public class CartDetailRepositoryImpl implements CartDetailRepository{
                 (rs,rowNum)->
                         new CartDetail(
                                 rs.getInt("idCartDetail"),
-                                rs.getInt("idCart"),
-                                rs.getInt("idProduct"),
+                                rs.getString("idCart"),
+                                rs.getString("idProduct"),
                                 rs.getInt("qty")
                         ));
     }

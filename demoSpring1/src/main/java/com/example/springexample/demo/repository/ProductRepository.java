@@ -7,8 +7,8 @@ import java.util.List;
 public interface ProductRepository {
     List<Product> findAll();
     void addProduct(Product product);
-    void deleteProductById(int id);
-    Product findById(int id);
+    void deleteProductById(String id);
+    Product findById(String id);
     void deleteAllProduct();
     List<Product> findByName(String name);
     void deleteProductByName(String name);

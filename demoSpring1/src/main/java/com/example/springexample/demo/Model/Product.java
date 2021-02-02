@@ -4,17 +4,25 @@ import java.util.concurrent.atomic.AtomicLong;
 
 public class Product {
    private static final AtomicLong counter=  new AtomicLong();
-   private int id;
+   private String id;
    private String name;
    private int categoryId;
    private double price;
    private int qty;
 
-    public Product(int id, String name, int categoryId, double price) {
+    public Product(String id, String name, int categoryId, double price) {
         this.id = id;
         this.name = name;
         this.categoryId = categoryId;
         this.price = price;
+    }
+
+    public Product(String id, String name, int categoryId, double price, int qty) {
+        this.id = id;
+        this.name = name;
+        this.categoryId = categoryId;
+        this.price = price;
+        this.qty = qty;
     }
 
     public int getQty() {
@@ -29,11 +37,11 @@ public class Product {
         return counter;
     }
 
-    public long getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(String id) {
         this.id = id;
     }
 
@@ -61,13 +69,6 @@ public class Product {
         this.price = price;
     }
 
-    @Override
-    public int hashCode(){
-        final int prime = 31;
-        int result = 1;
-        result = prime*result+(int)(id^(id>>>32));
-        return result;
-    }
     @Override
     public boolean equals(Object obj){
         if (this==obj)
