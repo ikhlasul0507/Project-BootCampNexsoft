@@ -6,6 +6,7 @@ public class Mobil {
     private String idMobil,namaMobil,idMerk,idType;
     private int harga,tahun;
     private int qty;
+    List<Merk> merkList;
     public Mobil(){
 
     }
@@ -29,6 +30,13 @@ public class Mobil {
         this.tahun = tahun;
     }
 
+    public List<Merk> getMerkList() {
+        return merkList;
+    }
+
+    public void setMerkList(List<Merk> merkList) {
+        this.merkList = merkList;
+    }
 
     public int getQty() {
         return qty;

@@ -32,8 +32,8 @@ public class TypeRepositoryImpl implements TypeRepository {
     }
     // update new customer
     public void updateType(Type type) {
-        jdbcTemplate.update("UPDATE tbl_type SET namaType= ?",
-                type.getNamaType());
+        jdbcTemplate.update("UPDATE tbl_type SET namaType= ? Where idType=?",
+                type.getNamaType(), type.getIdType());
     }
 
     public Type findById(String idType){

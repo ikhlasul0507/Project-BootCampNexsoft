@@ -29,6 +29,16 @@ public class MobilRepositoryImpl implements MobilRepository {
                                 rs.getInt("tahun")
                         )
         );
+        for (Mobil ch : mobilHeaders) {
+            ch.setMerkList(jdbcTemplate.query("select * from tbl_merk c, tbl_mobil p where " +
+                            "c.idMerk=?",
+                    preparedStatement -> preparedStatement.setString(1,ch.getIdMerk()),
+                    (rs, rowNum) ->
+                            new Merk(
+                                    rs.getString("idMerk"),
+                                    rs.getString("namaMerk")
+                            )));
+        }
         return mobilHeaders;
     }
     // Add new customer
@@ -40,7 +50,7 @@ public class MobilRepositoryImpl implements MobilRepository {
     }
     // update new customer
     public void updateMobil(Mobil mobil) {
-        jdbcTemplate.update("UPDATE tbl_mobil SET namaMobil='"+mobil.getNamaMobil()+"',idMerk='"+mobil.getIdMerk()+"',idType='"+mobil.getIdType()+"',harga="+mobil.getHarga()+",Tahun="+mobil.getTahun()+"");
+        jdbcTemplate.update("UPDATE tbl_mobil SET namaMobil='"+mobil.getNamaMobil()+"',idMerk='"+mobil.getIdMerk()+"',idType='"+mobil.getIdType()+"',harga="+mobil.getHarga()+",Tahun="+mobil.getTahun()+" where idMobil='"+mobil.getIdMobil()+"'");
     }
 
     public Mobil findById(String idMobil){

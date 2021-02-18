@@ -32,8 +32,8 @@ public class MerkRepositoryImpl implements MerkRepository {
     }
     // update new customer
     public void updateMerk(Merk merk) {
-        jdbcTemplate.update("UPDATE tbl_merk SET namaMerk= ?",
-                merk.getNamaMerk());
+        jdbcTemplate.update("UPDATE tbl_merk SET namaMerk= ? Where idMerk=?",
+                merk.getNamaMerk(), merk.getIdMerk());
     }
 
     public Merk findById(String idMerk){
